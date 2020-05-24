@@ -9,6 +9,7 @@ apt-get install --assume-yes --no-install-recommends \
   git \
   httpie \
   jq \
+  musl-tools \
 #
 
 rm -rf /var/lib/apt/lists/*
