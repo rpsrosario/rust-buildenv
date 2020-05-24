@@ -1,0 +1,100 @@
+version: 2.1
+
+commands:
+  build_image:
+    description: "Build a docker image"
+    steps:
+      - run:
+          name: "build_image"
+          command: |
+            IMAGE=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_JOB
+            docker build -f Dockerfile.$CIRCLE_JOB -t $IMAGE .
+            docker save $IMAGE | gzip --best --stdout > $CIRCLE_JOB.tar.gz
+  push_images:
+    description: "Push all built images"
+    steps:
+      - run:
+          name: "push_images"
+          command: |
+            for image in $(find . -type f -name '*.tar.gz'); do
+              gzip --decompress --stdout $image | docker load
+            done
+            echo "$DOCKER_PASSWORD" | docker login \
+              --username $CIRCLE_PROJECT_USERNAME \
+              --password-stdin
+            IMAGE_PREFIX=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+            for image in $(find . -type f -name '*.tar.gz' -printf '%P\n'); do
+              tag=$(echo $image | sed 's:.tar.gz::')
+              docker push $IMAGE_PREFIX:$tag
+            done
+
+jobs:
+  stable:
+    machine: true
+    steps:
+      - checkout
+      - build_image
+      - store_artifacts:
+          path: stable.tar.gz
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - stable.tar.gz
+  stable-slim:
+    machine: true
+    steps:
+      - checkout
+      - build_image
+      - store_artifacts:
+          path: stable-slim.tar.gz
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - stable-slim.tar.gz
+  nightly:
+    machine: true
+    steps:
+      - checkout
+      - build_image
+      - store_artifacts:
+          path: nightly.tar.gz
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - nightly.tar.gz
+  nightly-slim:
+    machine: true
+    steps:
+      - checkout
+      - build_image
+      - store_artifacts:
+          path: nightly-slim.tar.gz
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - nightly-slim.tar.gz
+  push-images:
+    machine: true
+    steps:
+      - attach_workspace:
+          at: ./
+      - push_images
+
+workflows:
+  build:
+    jobs:
+      - stable
+      - stable-slim
+      - nightly
+      - nightly-slim
+      - push-images:
+          context: docker-credentials
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - stable
+            - stable-slim
+            - nightly
+            - nightly-slim
