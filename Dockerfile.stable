@@ -1,0 +1,8 @@
+FROM rust:latest
+COPY scripts/* /bin/
+RUN  install-package-dependencies.sh \
+  && install-clippy.sh \
+  && install-rustfmt.sh \
+  && rm /bin/install-*.sh \
+  && echo 'echo-buildenv.sh' >> ~/.bashrc \
+  && echo-buildenv.sh
