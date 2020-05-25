@@ -98,3 +98,35 @@ workflows:
             - stable-slim
             - nightly
             - nightly-slim
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - nightly
+      - nightly-slim
+      - push-images:
+          context: docker-credentials
+          requires:
+            - nightly
+            - nightly-slim
+  weekly:
+    triggers:
+      - schedule:
+          cron: "0 8 * * 0"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - stable
+      - stable-slim
+      - push-images:
+          context: docker-credentials
+          requires:
+            - stable
+            - stable-slim

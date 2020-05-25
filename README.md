@@ -39,7 +39,9 @@ always have the summary of the build environment, however you can invoke it
 yourself with `echo-buildenv.sh`, if necessary.
 
 If you do not want to build the images yourself you can always use one of the
-[pre-built images][H2] available.
+[pre-built images][H2] available. The nightly tags are built once per day while
+the stable tags are built once per week, so the build environments should be
+fairly up-to-date.
 
 [D0]: Dockerfile.stable
 [D1]: Dockerfile.stable-slim
