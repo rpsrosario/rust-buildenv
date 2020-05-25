@@ -11,6 +11,8 @@ rustup_version=$(rustup --version | cut -d' ' -f2)
 clippy_version=$(cargo clippy --version | cut -d' ' -f2)
 rustfmt_version=$(rustfmt --version | cut -d' ' -f2)
 
+cargo_cache_version=$(cargo cache --version | cut -d' ' -f2)
+
 musl_tools_version=$(dpkg -s musl-tools | grep Version | cut -d' ' -f2)
 
 cat <<EOF
@@ -26,6 +28,8 @@ Rust Build Environment
 
   clippy: $clippy_version
   rustfmt: $rustfmt_version
+
+  cargo-cache: $cargo_cache_version
 
   musl-tools: $musl_tools_version
 EOF

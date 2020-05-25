@@ -25,6 +25,9 @@ the tools being installed. The provided tools are:
   - [clippy](https://github.com/rust-lang/rust-clippy)
   - [rustfmt](https://github.com/rust-lang/rustfmt)
 
+- Cargo Subcommands
+  - [cargo-cache](https://crates.io/crates/cargo-cache)
+
 - General tools
   - [git](https://git-scm.com/)
   - [HTTPie](https://httpie.org/)

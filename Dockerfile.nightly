@@ -4,6 +4,8 @@ RUN  install-package-dependencies.sh \
   && install-clippy.sh \
   && install-rustfmt.sh \
   && install-musl-cross-compilation.sh \
+  && install-cargo-cache.sh \
   && rm /bin/install-*.sh \
+  && cargo cache --remove-dir all \
   && echo 'echo-buildenv.sh' >> ~/.bashrc \
   && echo-buildenv.sh
