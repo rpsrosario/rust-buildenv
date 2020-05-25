@@ -40,8 +40,8 @@ yourself with `echo-buildenv.sh`, if necessary.
 
 If you do not want to build the images yourself you can always use one of the
 [pre-built images][H2] available. The nightly tags are built once per day while
-the stable tags are built once per week, so the build environments should be
-fairly up-to-date.
+the stable tags are built once per week. All tags are built on new commits to
+the repository. Overall the build environments should be fairly up-to-date.
 
 [D0]: Dockerfile.stable
 [D1]: Dockerfile.stable-slim
