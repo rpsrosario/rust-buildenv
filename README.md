@@ -26,6 +26,7 @@ the tools being installed. The provided tools are:
   - [rustfmt](https://github.com/rust-lang/rustfmt)
 
 - Cargo Subcommands
+  - [cargo-build-deps](https://github.com/romac/cargo-build-deps)
   - [cargo-cache](https://crates.io/crates/cargo-cache)
 
 - General tools
