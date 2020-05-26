@@ -42,10 +42,19 @@ in the build environment. This script is executed on shell login so that you
 always have the summary of the build environment, however you can invoke it
 yourself with `echo-buildenv.sh`, if necessary.
 
+You can build any of the images by telling `docker` which file to use:
+```sh
+docker build . -f Dockerfile.stable -t rust-buildenv:stable
+```
+
 If you do not want to build the images yourself you can always use one of the
 [pre-built images][H2] available. The nightly tags are built once per day while
-the stable tags are built once per week. All tags are built on new commits to
-the repository. Overall the build environments should be fairly up-to-date.
+the stable tags are built once per week. All tags are built whenever changes are
+pushed to the repository. This ensures that the build environments stay fairly
+up-to-date.
+
+_Is there a tool that you miss in this build environment? Then create an issue
+for it or just submit a Pull Request!_
 
 [D0]: Dockerfile.stable
 [D1]: Dockerfile.stable-slim
